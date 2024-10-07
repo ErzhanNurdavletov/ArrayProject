@@ -23,7 +23,7 @@ public class ArrayProject {
 
         int numberAttempts = 5;
 
-        System.out.println("Enter three numbers(1, 2, 3, 4, 5, 6, 7)");
+        System.out.println("Enter three numbers (1, 2, 3, 4, 5, 6, 7)");
 
         while (numberAttempts > 0) {
             for (int i = 0; i < 3; i++) {
@@ -34,7 +34,7 @@ public class ArrayProject {
             }
             numberAttempts--;
             if (countRightAnswers == 3) {
-                System.out.println("all boxes are found");
+                System.out.println("all boxes are found \uD83E\uDDF0 \uD83D\uDDC3\uFE0F");
                 break;
 
             }
