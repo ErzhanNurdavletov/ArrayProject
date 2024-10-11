@@ -7,68 +7,75 @@ public class ArrayProject {
         Scanner sc = new Scanner(System.in);
         Random random = new Random();
 
-
         int[] rightNumbers = new int[3];
-        rightNumbers[0] = 1;
-        rightNumbers[1] = 2;
-        rightNumbers[2] = 3;
 
-        //for (int i = 0; i < 3; i++) {
-        //    rightNumbers[i] = random.nextInt(7) + 1;
-        //}
-
-
-        int[] inputNumbers = new int[3];
-        int countRightAnswers = 0;
+        for (int i = 0; i < 3; i++) {
+            rightNumbers[i] = random.nextInt(7) + 1;
+        }
+        while (rightNumbers[0] == rightNumbers[1] || rightNumbers[1] == rightNumbers[2] || rightNumbers[0] == rightNumbers[2]) {
+            for (int i = 0; i < 3; i++) {
+                rightNumbers[i] = random.nextInt(7) + 1;
+            }
+        }
 
         int numberAttempts = 5;
 
-        System.out.println("Enter three numbers (1, 2, 3, 4, 5, 6, 7)");
+        displayWelcomeMessage();
 
         while (numberAttempts > 0) {
+            int countRightAnswers = 0;
+
+            int[] inputNumbers = new int[3];
+
+            boolean[] checkedUniqueNumbers = new boolean[3];
+
             for (int i = 0; i < 3; i++) {
                 inputNumbers[i] = sc.nextInt();
-                if (inputNumbers[i] == rightNumbers[i]) {
-                    countRightAnswers++;
+            }
+
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (!checkedUniqueNumbers[j] && inputNumbers[i] == rightNumbers[j]) {
+                        countRightAnswers++;
+                        checkedUniqueNumbers[j] = true;
+                        break;
+                    }
                 }
             }
-            numberAttempts--;
+
             if (countRightAnswers == 3) {
-                System.out.println("all boxes are found \uD83E\uDDF0 \uD83D\uDDC3\uFE0F");
+                System.out.println("All boxes are found");
                 break;
-
             }
-            if (countRightAnswers == 1) {
-                System.out.println("1 out of 3 is correct. " + numberAttempts + " attempts left");
-            }
-            if (countRightAnswers == 2) {
-                System.out.println("2 out of 3 are correct. " + numberAttempts + " attempts left");
-            }
-            if (countRightAnswers == 0) {
-                System.out.println("0 out of 3 are correct. " + numberAttempts + " attempts left");
+            else {
+                showNumberCorrectAnswers(countRightAnswers, numberAttempts);
             }
 
-            countRightAnswers = 0;
+            numberAttempts--;
 
             if (numberAttempts == 0) {
-                numberAttempts = 5;
                 System.out.println("5 attempts are over, boxes replaced");
                 for (int i = 0; i < 3; i++) {
-                    rightNumbers[i] = random.nextInt(3) + 1;
-
+                    rightNumbers[i] = random.nextInt(7) + 1;
                 }
                 while (rightNumbers[0] == rightNumbers[1] || rightNumbers[1] == rightNumbers[2] || rightNumbers[0] == rightNumbers[2]) {
                     for (int i = 0; i < 3; i++) {
                         rightNumbers[i] = random.nextInt(7) + 1;
-
-
                     }
-
                 }
-
+                numberAttempts = 5;
             }
-
-
         }
+    }
+
+    static void displayWelcomeMessage() {
+        System.out.println("-------------------------------------------------");
+        System.out.println("Do not enter numbers bigger than 7 or less than 1");
+        System.out.println("-------------------------------------------------");
+        System.out.println("Enter three numbers (1, 2, 3, 4, 5, 6, 7)");
+
+    }
+    static void showNumberCorrectAnswers(int countRightAnswers, int numberAttempts) {
+        System.out.println(countRightAnswers + " out of 3 are correct. " + (numberAttempts - 1) + " attempts left");
     }
 }
